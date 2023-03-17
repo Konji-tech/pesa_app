@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pesa_app/screens/welcome.dart';
+import 'package:pesa_app/screens/openScreen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class signup extends StatelessWidget {
+  const signup({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
+    return Scaffold(body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
@@ -26,9 +25,9 @@ class Login extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Text("JIPANGE",
-                        style: GoogleFonts.roboto(
+                        style: GoogleFonts.nunito(
                             fontWeight: FontWeight.bold, fontSize: 30)),
-                    Image.asset("images/pot.png",
+                    Image.asset("images/idk.png",
                         fit: BoxFit.fitWidth, height: 340, width: 340),
                     SizedBox(
                       height: 30,
@@ -41,7 +40,27 @@ class Login extends StatelessWidget {
                             Icons.person_outline,
                             color: Colors.white70,
                           ),
-                          labelText: "Enter UserName ",
+                          labelText: "First Name ",
+                          labelStyle:
+                              TextStyle(color: Colors.black),
+                          filled: true,
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          fillColor: Colors.white.withOpacity(0.3),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide: const BorderSide(
+                                  width: 0, style: BorderStyle.none))),
+                    ),
+                    SizedBox(height: 20),
+                   TextField(
+                      obscureText: false,
+                      style: TextStyle(color: Colors.black.withOpacity(0.9)),
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.person_outline,
+                            color: Colors.white70,
+                          ),
+                          labelText: "Enter Last Name",
                           labelStyle:
                               TextStyle(color: Colors.black),
                           filled: true,
@@ -55,15 +74,15 @@ class Login extends StatelessWidget {
                     SizedBox(height: 20),
                     TextField(
                       obscureText: false,
-                      style: TextStyle(color: Colors.white.withOpacity(0.9)),
+                      style: TextStyle(color: Colors.black.withOpacity(0.9)),
                       decoration: InputDecoration(
                           prefixIcon: Icon(
-                            Icons.lock_outline,
+                            Icons.person_outline,
                             color: Colors.white70,
                           ),
-                          labelText: "Enter Password",
+                          labelText: "Email ",
                           labelStyle:
-                              TextStyle(color: Colors.black.withOpacity(0.9)),
+                              TextStyle(color: Colors.black),
                           filled: true,
                           floatingLabelBehavior: FloatingLabelBehavior.never,
                           fillColor: Colors.white.withOpacity(0.3),
@@ -72,6 +91,28 @@ class Login extends StatelessWidget {
                               borderSide: const BorderSide(
                                   width: 0, style: BorderStyle.none))),
                     ),
+                    SizedBox(height: 20),
+                    TextField(
+                      obscureText: false,
+                      style: TextStyle(color: Colors.black.withOpacity(0.9)),
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.person_outline,
+                            color: Colors.white70,
+                          ),
+                          labelText: "Enter Phone Number",
+                          labelStyle:
+                              TextStyle(color: Colors.black),
+                          filled: true,
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          fillColor: Colors.white.withOpacity(0.3),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide: const BorderSide(
+                                  width: 0, style: BorderStyle.none))),
+                    ),
+                   
+                   
                     SizedBox(height: 25,),
                     Container(
                       width: MediaQuery.of(context).size.width,
@@ -90,7 +131,7 @@ class Login extends StatelessWidget {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15))),
                           ),
-                          child: Text("Login",
+                          child: Text("Sign Up",
                               style: GoogleFonts.roboto(
                                   fontWeight: FontWeight.bold, fontSize: 15)),
                                   )),
@@ -100,3 +141,4 @@ class Login extends StatelessWidget {
             )));
   }
 }
+   

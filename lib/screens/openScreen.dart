@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:pesa_app/screens/login.dart';
+import 'package:pesa_app/screens/signup.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class openScreen extends StatelessWidget {
@@ -9,95 +9,85 @@ class openScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Container(
-        child: SingleChildScrollView(
+      body: 
+      SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+             gradient: LinearGradient(colors: [
+                  Color(0xFF508248),
+                  Color(0xFF57C84D),
+                  Color(0xFF2EB62C),
+                ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+          
+          
+          ),
+          padding: EdgeInsets.all(20),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(vertical: 25, horizontal: 30),
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(30)),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Text("Pesa App",
-                        style: GoogleFonts.roboto(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                        )),
-                    SizedBox(height: 25),
-                    Image.asset(
-                      "images/payments.png",
-                      height: 300,
-                      width: 300,
-                    ),
-                  ],
-                ),
+              SizedBox(height: 35),
+              
+              Text(
+                "JIPANGE",
+                style: GoogleFonts.nunito(
+                    color:Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30),
+                textAlign: TextAlign.center,
               ),
-              SizedBox(
-                height: 25,
+              
+              Image.asset(
+                "images/welcome2.png",
+                height: height * 0.6,
               ),
               Column(
                 children: [
-                  SizedBox(
-                    height: 25,
-                  ),
                   Text(
-                    "Best Way to Invest Your Money!",
-                    style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
+                    "MANAGE YOUR FINANCES",
+                    style: GoogleFonts.nunito(
+                        color:  Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30),
+                    textAlign: TextAlign.center,
                   ),
-                  SizedBox(
-                    height: 25,
+                  SizedBox(height: 5),
+                  Text(
+                    "Keep track of what you spend on the go! Daily,weekly and even monthly",
+                    style: GoogleFonts.nunito(color:  Colors.white,fontWeight: FontWeight.bold, fontSize: 20),
+                    textAlign: TextAlign.center,
                   ),
-                  SizedBox(
-                    width: 300,
-                    height: 40,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const login()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 8, horizontal: 30),
-                          backgroundColor: Colors.purple,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                        ),
-                        child: Text("Sign In",
-                            style: GoogleFonts.roboto(
-                                fontWeight: FontWeight.bold, fontSize: 15))),
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  SizedBox(
-                    width: 300,
-                    height: 40,
-                    child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 8, horizontal: 30),
-                          backgroundColor: Colors.purple,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                        ),
-                        child: Text("Sign Up",
-                            style: GoogleFonts.roboto(
-                                fontWeight: FontWeight.bold, fontSize: 15))),
-                  )
+                ],
+              ),
+              SizedBox(height: 15),
+              Row(
+                children: [
+                  Expanded(
+                      child: ElevatedButton(
+                          onPressed: () {Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const Login()));},
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(),
+                            foregroundColor: Color(0xFFFFFFFF),
+                            backgroundColor: Color(0xFF183b25),
+                            side: BorderSide(color: Color(0xFF272727)),
+                            padding: EdgeInsets.symmetric(vertical: 15.0),
+                          ),
+                          child: Text("Sign in"))),
+                  SizedBox(width: 10.0),
+                  Expanded(
+                      child: ElevatedButton(
+                          onPressed: () {Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const signup()));},
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(),
+                            foregroundColor: Color(0xFF272727),
+                            backgroundColor: Colors.black,
+                            side: BorderSide(color: Color(0xFF272727)),
+                            padding: EdgeInsets.symmetric(vertical: 15.0),
+                          ),
+                          child: Text("Sign Up",style: TextStyle(color: Colors.white),))),
                 ],
               )
             ],
@@ -105,6 +95,8 @@ class openScreen extends StatelessWidget {
         ),
       ),
     );
+    
+    
   }
 }
 
