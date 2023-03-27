@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pesa_app/controller/auth_controller.dart';
 import 'package:pesa_app/widgets/welcomeWidget.dart';
 import 'package:pesa_app/screens/expenses.dart';
 
@@ -42,7 +43,7 @@ class welcome extends StatelessWidget {
                     Positioned(
                       top: 115,
                       left: 20,
-                      child: Text("Welcome Konji",
+                      child: Text("Welcome " + AuthController.to.firebaseUserData.value["firstname"],
                           style: GoogleFonts.nunito(
                               fontWeight: FontWeight.bold, fontSize: 30)),
                     ),

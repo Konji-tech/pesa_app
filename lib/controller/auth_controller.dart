@@ -18,6 +18,14 @@ class AuthController extends GetxController {
 
   late CollectionReference users;
 
+  //creating variable collections
+  var expenses = <String, dynamic>{}.obs;
+  var income = <String, dynamic>{}.obs;
+
+  //variable to select an id
+  var expenseSelectedId = "".obs;
+  var incomeSelectedId = "".obs;
+
   @override
   void onReady() {
     super.onReady();
@@ -47,6 +55,9 @@ class AuthController extends GetxController {
         update();
         Get.offAll(() => welcome());
         Utils.dismissLoader();
+
+        expenses.bindStream(expenseStream());
+        income.bindStream(incomeStream());
       }
     }
   }
@@ -127,8 +138,9 @@ class AuthController extends GetxController {
     Utils.dismissLoader();
   }
 
-   //creating expenses
-  createExpenses(expenseName,expenseAmount,expenseCategory,User? user) async {
+  //creating expenses
+  createExpenses(
+      expenseName, expenseAmount, expenseCategory, User? user) async {
     Utils.showLoading(message: "Adding an expense");
     var userId = AuthController.to.firebaseUser.value?.uid;
     try {
@@ -146,8 +158,8 @@ class AuthController extends GetxController {
     Utils.dismissLoader();
   }
 
-   //creating inome
-  createIncome(incomeName,incomeAmount,incomeSource,User? user) async {
+  //creating inome
+  createIncome(incomeName, incomeAmount, incomeSource, User? user) async {
     Utils.showLoading(message: "Adding income");
     var userId = AuthController.to.firebaseUser.value?.uid;
     try {
@@ -166,16 +178,21 @@ class AuthController extends GetxController {
   }
 
   //edit expenses
-  editExpenses(expenseName,expenseAmount,expenseCategory,User? user) async {
+  editExpenses(expenseName, expenseAmount, expenseCategory, User? user) async {
     Utils.showLoading(message: "Editing  expense");
     var userId = AuthController.to.firebaseUser.value?.uid;
+
     try {
-      await users.doc(user!.uid).collection('Expense').add({
+      // var snapshot = user
+      await users
+          .doc(user!.uid)
+          .collection('Expense')
+          .doc(expenseSelectedId.value)
+          .update({
         "userId": userId,
         "expenseName": expenseName,
         "expenseAmount": expenseAmount,
         "expenseCategory": expenseCategory,
-        
       });
       Utils.showSuccess("success");
     } catch (e) {
@@ -184,22 +201,85 @@ class AuthController extends GetxController {
     Utils.dismissLoader();
   }
 
-   //editing inome
-  editIncome(incomeName,incomeAmount,incomeSource,User? user) async {
+  //editing inome
+  editIncome(incomeName, incomeAmount, incomeSource, User? user) async {
     Utils.showLoading(message: "Editing income");
     var userId = AuthController.to.firebaseUser.value?.uid;
     try {
-      await users.doc(user!.uid).collection('Income').add({
+      await users
+          .doc(user!.uid)
+          .collection('Income')
+          .doc(incomeSelectedId.value)
+          .update({
         "userId": userId,
         "incomeName": incomeName,
         "incomeAmount": incomeAmount,
         "incomeSource": incomeSource,
-        
       });
       Utils.showSuccess("success");
     } catch (e) {
       Utils.showError('failed to add. try again');
     }
     Utils.dismissLoader();
+  }
+
+  deleteExpense(id) async {
+    Utils.showLoading(message: "Deleting Expense");
+    var userId = AuthController.to.firebaseUser.value?.uid;
+    try {
+      await users.doc(userId!).collection('Expense').doc(id).delete();
+
+      Utils.showSuccess("success");
+    } catch (e) {
+      Utils.showError('failed to delete. try again');
+    }
+    Utils.dismissLoader();
+  }
+
+  deleteIncome(id) async {
+    Utils.showLoading(message: "Deleting Income");
+    var userId = AuthController.to.firebaseUser.value?.uid;
+    try {
+      await users.doc(userId!).collection('Income').doc(id).delete();
+
+      Utils.showSuccess("success");
+    } catch (e) {
+      Utils.showError('failed to delete. try again');
+    }
+    Utils.dismissLoader();
+  }
+
+  selectExpense(id) {
+    expenseSelectedId.value = id;
+  }
+
+  selectIncome(id) {
+    incomeSelectedId.value = id;
+  }
+
+  // Fetch livestream
+  Stream<Map<String, dynamic>> expenseStream() {
+    var ref = FirebaseFirestore.instance
+        .collection('Expense')
+        .where('userId', isEqualTo: AuthController.to.auth.currentUser.uid)
+        .orderBy('created')
+        .snapshots();
+    var data = <String, dynamic>{};
+    return ref.map((list) {
+      return {for (var element in list.docs) element.id: element.data()};
+    });
+  }
+
+  // Fetch livestream
+  Stream<Map<String, dynamic>> incomeStream() {
+    var ref = FirebaseFirestore.instance
+        .collection('Income')
+        .where('userId', isEqualTo: AuthController.to.auth.currentUser.uid)
+        .orderBy('created')
+        .snapshots();
+    var data = <String, dynamic>{};
+    return ref.map((list) {
+      return {for (var element in list.docs) element.id: element.data()};
+    });
   }
 }

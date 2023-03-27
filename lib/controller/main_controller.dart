@@ -8,13 +8,7 @@ class MainController extends GetxController {
   var firestore;
   static MainController get to => Get.find();
 
-  //creating variable collections
-  var expenses = <String, dynamic>{}.obs;
-  var income = <String, dynamic>{}.obs;
-
-  //variable to select an id
-  var expensesSelectedId = "".obs;
-  var incomeSelectedId = "".obs;
+ 
 
   @override
   void onReady() {

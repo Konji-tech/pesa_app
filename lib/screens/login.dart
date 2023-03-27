@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pesa_app/controller/auth_controller.dart';
 import 'package:pesa_app/screens/welcome.dart';
 
-class Login extends StatelessWidget {
+import '../utils/utils.dart';
+
+class Login extends StatefulWidget {
   const Login({super.key});
 
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,15 +45,15 @@ class Login extends StatelessWidget {
                     ),
                     TextField(
                       obscureText: false,
+                      controller: emailController,
                       style: TextStyle(color: Colors.black.withOpacity(0.9)),
                       decoration: InputDecoration(
                           prefixIcon: Icon(
                             Icons.person_outline,
                             color: Colors.white70,
                           ),
-                          labelText: "Enter UserName ",
-                          labelStyle:
-                              TextStyle(color: Colors.black),
+                          labelText: "Enter Email ",
+                          labelStyle: TextStyle(color: Colors.black),
                           filled: true,
                           floatingLabelBehavior: FloatingLabelBehavior.never,
                           fillColor: Colors.white.withOpacity(0.3),
@@ -55,6 +65,7 @@ class Login extends StatelessWidget {
                     SizedBox(height: 20),
                     TextField(
                       obscureText: false,
+                      controller: passwordController,
                       style: TextStyle(color: Colors.white.withOpacity(0.9)),
                       decoration: InputDecoration(
                           prefixIcon: Icon(
@@ -72,19 +83,29 @@ class Login extends StatelessWidget {
                               borderSide: const BorderSide(
                                   width: 0, style: BorderStyle.none))),
                     ),
-                    SizedBox(height: 25,),
+                    SizedBox(
+                      height: 25,
+                    ),
                     Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 50,
-                      margin: EdgeInsets.fromLTRB(0, 10, 0, 20),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(90)),
-                      child:  ElevatedButton(
-                          onPressed: () { Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const welcome()));},
+                        width: MediaQuery.of(context).size.width,
+                        height: 50,
+                        margin: EdgeInsets.fromLTRB(0, 10, 0, 20),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(90)),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if (emailController.text.trim().isEmpty ||
+                                passwordController.text.trim().isEmpty) {
+                              Utils.showError("All fields should be filled");
+                            } else {
+                              await AuthController.to.login(
+                                  emailController.text.trim(),
+                                  passwordController.text.trim());
+                            }
+                          },
                           style: ElevatedButton.styleFrom(
-                            padding:
-                                EdgeInsets.symmetric(vertical: 8, horizontal: 30),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 30),
                             backgroundColor: Colors.black,
                             shape: RoundedRectangleBorder(
                                 borderRadius:
@@ -93,7 +114,7 @@ class Login extends StatelessWidget {
                           child: Text("Login",
                               style: GoogleFonts.roboto(
                                   fontWeight: FontWeight.bold, fontSize: 15)),
-                                  )),
+                        )),
                   ],
                 ),
               ),
