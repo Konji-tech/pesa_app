@@ -1,6 +1,6 @@
 # pesa_app
 
-A new Flutter project.
+Finance Management application.
 
 ## Getting Started
 
